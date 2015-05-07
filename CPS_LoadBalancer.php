@@ -28,6 +28,8 @@ class CPS_LoadBalancer
     $this->_statusFilePrefix = '/tmp/cps-api-node-status-';
     $this->_sendWhenAllFailed = true;
     $this->_debug = false;
+    $this->_non_retry_cmds = array('update', 'delete', 'replace', 'partial-replace', 'partial-xreplace', 'insert', 'create-alert', 'update-alerts', 'delete-alerts',
+      'search-delete', 'commit-transaction', 'rollback-transaction');
   }
 
   /**
@@ -46,7 +48,7 @@ class CPS_LoadBalancer
    */
   public function newRequest(CPS_Request &$request)
   {
-    if ($request->getCommand() == 'search') {
+    if (!array_search(strtolower($request->getCommand()), $this->_non_retry_cmds)) {
       $this->_retryRequests = true;
     } else {
       $this->_retryRequests = false;
@@ -153,15 +155,13 @@ class CPS_LoadBalancer
    * @ignore
    * @param string &$responseString raw response string
    */
-  public function shouldRetry(&$responseString, $exception = NULL)
+  public function shouldRetry(&$responseString, $exception, $transaction_id)
   {
-    if (!$this->_retryRequests)
-      return false;
     if ($this->_numUsed == count($this->_connectionStrings))
       return false;
     if (!is_null($exception)) {
       $this->logFailure();
-      return true;
+      return ($this->_retryRequests && !$transaction_id);
     }
     $sp = strpos($responseString, '<cps:error>');
     if ($sp === FALSE) {
@@ -171,13 +171,13 @@ class CPS_LoadBalancer
     $ep = strrpos($responseString, '</cps:error>');
     if ($ep === FALSE) {// shouldn't really ever happen, unless our XML response was cut off?
       $this->logFailure();
-      return true;
+      return ($this->_retryRequests && !$transaction_id);
     }
     try {
       $errorXml = new SimpleXMLElement('<root xmlns:cps="www.clusterpoint.com">' . substr($responseString, $sp, $ep - $sp + strlen('</cps:error>')) . '</root>');
     } catch (Exception $e) {
       // Unable to parse errors - shouldn't really ever happen, unless there's something wrong with this function
-      return true;
+      return ($this->_retryRequests && !$transaction_id);
     }
     foreach ($errorXml->children('www.clusterpoint.com')->error as $e) {
       $code = (int)$e->children('')->code;
@@ -186,7 +186,7 @@ class CPS_LoadBalancer
       if (($level == 'FAILED') || ($level == 'ERROR') || ($level == 'FATAL') || ($code == 2344)) {
         // request returned an error, should retry
         $this->logFailure();
-        return true;
+        return ($this->_retryRequests && !$transaction_id);
       }
     }
     $this->logSuccess();
