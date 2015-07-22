@@ -1,4 +1,8 @@
 <?php
+//<namespace
+use cps\CPS AS CPS;
+//namespace>
+
 /**
  * Request and response classes for all commands in the CPS API
  * @package CPS
@@ -21,7 +25,7 @@ require_once(dirname(__FILE__) . '/CPS.php');
  */
 function CPS_Term($term, $xpath = '', $escape = TRUE)
 {
-  return cps\CPS::Term($term, $xpath, $escape);
+  return CPS::Term($term, $xpath, $escape);
 }
 
 /**
@@ -34,7 +38,7 @@ function CPS_Term($term, $xpath = '', $escape = TRUE)
  */
 function CPS_QueryTerm($term, $xpath = '', $allowed_symbols = '')
 {
-  return cps\CPS::QueryTerm($term, $xpath, $allowed_symbols);
+  return CPS::QueryTerm($term, $xpath, $allowed_symbols);
 }
 
 /**
@@ -44,7 +48,7 @@ function CPS_QueryTerm($term, $xpath = '', $allowed_symbols = '')
  */
 function CPS_QueryArray($array)
 {
-  return cps\CPS::QueryArray($array);
+  return CPS::QueryArray($array);
 }
 
 /**
@@ -59,7 +63,7 @@ function CPS_QueryArray($array)
  */
 function CPS_CircleDefinition($name, $center, $radius, $tagName1 = null, $tagName2 = null, $coord_type = null)
 {
-  return cps\CPS::CircleDefinition($name, $center, $radius, $tagName1, $tagName2, $coord_type);
+  return CPS::CircleDefinition($name, $center, $radius, $tagName1, $tagName2, $coord_type);
 }
 
 /**
@@ -73,7 +77,7 @@ function CPS_CircleDefinition($name, $center, $radius, $tagName1 = null, $tagNam
  */
 function CPS_PolygonDefinition($name, $vertices, $tagName1 = null, $tagName2 = null, $coord_type = null)
 {
-  return cps\CPS::PolygonDefinition($name, $vertices, $tagName1, $tagName2, $coord_type);
+  return CPS::PolygonDefinition($name, $vertices, $tagName1, $tagName2, $coord_type);
 }
 
 
@@ -85,7 +89,7 @@ function CPS_PolygonDefinition($name, $vertices, $tagName1 = null, $tagName2 = n
 
 function CPS_RelevanceOrdering($ascdesc = '')
 {
-  return cps\CPS::RelevanceOrdering($ascdesc);
+  return CPS::RelevanceOrdering($ascdesc);
 }
 
 /**
@@ -97,7 +101,7 @@ function CPS_RelevanceOrdering($ascdesc = '')
 
 function CPS_NumericOrdering($tag, $ascdesc = 'ascending')
 {
-  return cps\CPS::NumericOrdering($tag, $ascdesc);
+  return CPS::NumericOrdering($tag, $ascdesc);
 }
 
 /**
@@ -109,7 +113,7 @@ function CPS_NumericOrdering($tag, $ascdesc = 'ascending')
 
 function CPS_DateOrdering($tag, $ascdesc = 'ascending')
 {
-  return cps\CPS::DateOrdering($tag, $ascdesc);
+  return CPS::DateOrdering($tag, $ascdesc);
 }
 
 /**
@@ -122,7 +126,7 @@ function CPS_DateOrdering($tag, $ascdesc = 'ascending')
 
 function CPS_StringOrdering($tag, $lang, $ascdesc = 'ascending')
 {
-  return cps\CPS::StringOrdering($tag, $lang, $ascdesc);
+  return CPS::StringOrdering($tag, $lang, $ascdesc);
 }
 
 /**#@+
@@ -130,7 +134,7 @@ function CPS_StringOrdering($tag, $lang, $ascdesc = 'ascending')
  */
 function CPS_GenericDistanceOrdering($type, $array, $ascdesc)
 {
-  return cps\CPS::GenericDistanceOrdering($type, $array, $ascdesc);
+  return CPS::GenericDistanceOrdering($type, $array, $ascdesc);
 }
 
 /**#@-*/
@@ -144,7 +148,7 @@ function CPS_GenericDistanceOrdering($type, $array, $ascdesc)
 
 function CPS_LatLonDistanceOrdering($array, $ascdesc = 'ascending')
 {
-  return cps\CPS::LatLonDistanceOrdering($array, $ascdesc);
+  return CPS::LatLonDistanceOrdering($array, $ascdesc);
 }
 
 /**
@@ -155,5 +159,5 @@ function CPS_LatLonDistanceOrdering($array, $ascdesc = 'ascending')
  */
 function CPS_PlaneDistanceOrdering($array, $ascdesc = 'ascending')
 {
-  return cps\CPS::PlaneDistanceOrdering($array, $ascdesc);
+  return CPS::PlaneDistanceOrdering($array, $ascdesc);
 }
