@@ -1,6 +1,8 @@
 <?php
 
+//<namespace
 namespace cps;
+//namespace>
 
 if (!defined("sock_timeout")) define("sock_timeout", 60);
 

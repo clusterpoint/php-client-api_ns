@@ -12,8 +12,10 @@ try {
   // Clearing storage
   $clearRequest = new cps\CPS_Request('clear');
   $cpsConnection->sendRequest($clearRequest);
+  sleep(10);
 } catch (cps\CPS_Exception $e) {
   var_dump($e->errors());
+  sleep(10);
   exit;
 }
 ?>

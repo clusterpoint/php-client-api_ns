@@ -8,6 +8,7 @@ try {
   // creating a CPS_Connection instance
   $cpsConnection = new cps\CPS_Connection($config['connection'], $config['database'], $config['username'], $config['password'],
     'document', '//document/id', array('account' => $config['account']));
+  $cpsConnection->setDebug(1);
 
   $cpsSimple = new cps\CPS_Simple($cpsConnection);
 
@@ -39,11 +40,13 @@ try {
 
   // Commit transaction
   $cpsSimple->commitTransaction();
+//  sleep(20);
   $docs = $cpsSimple->retrieveMultiple(array("1", "2"), DOC_TYPE_ARRAY);
   echo "After commit:\n";
   foreach ($docs as $doc) {
     echo $doc['id'] . ": " . $doc['balance'] . "\n";
   }
+  exit;
 } catch (cps\CPS_Exception $e) {
   var_dump($e->errors());
   exit;
