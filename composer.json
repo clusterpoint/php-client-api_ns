@@ -1,5 +1,5 @@
 {
-  "name": "clusterpoint/php_api_v3",
+  "name": "cps/php_api_v3",
   "description": "Clusterpoint v3, PHP Client API with namespaces.",
   "keywords": [
     "api",
