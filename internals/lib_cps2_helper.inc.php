@@ -4,6 +4,10 @@
 namespace cps;
 //namespace>
 
+if(__NAMESPACE__)
+  define('NSP', __NAMESPACE__ . '\\');
+else
+  define('NSP', '');
 if (defined('USE_OLD_LIB_SOCK'))
   require_once("lib_sock_old.inc.php");
 else
@@ -58,8 +62,11 @@ function cps2_exchange($host, $port, $message, $recipient, &$networkTime, $hmacU
   $errno = 0;
   $error = "";
   $sock = sock_init();
-  if (is_array($ssl_options) && isset($ssl_options["enabled"]) && function_exists("sock_enable_ssl"))
+  if (is_array($ssl_options) && isset($ssl_options["enabled"])) {
+    if (!function_exists(NSP . 'sock_enable_ssl'))
+      throw new CPS_Exception(array(array('long_message' => "No sock_enable_ssl function found", 'code' => ERROR_CODE_TIMEOUT, 'level' => 'FAILED', 'source' => 'CPS_API')));
     sock_enable_ssl($sock, $ssl_options["enabled"], $ssl_options["ca"], $ssl_options["cn"]);
+  }
   $time_start = microtime(true);
   if (sock_open($sock, $host, $port)) {
     $networkTime = microtime(true) - $time_start;
