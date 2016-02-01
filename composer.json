@@ -1,0 +1,14 @@
+{
+  "name": "clusterpoint/php_api_v3",
+  "description": "Clusterpoint v3, PHP Client API with namespaces.",
+  "keywords": [
+    "api",
+    "clusterpoint"
+  ],
+  "license": "MIT",
+  "homepage": "http://clusterpoint.com",
+  "version": "3.0.1",
+  "require": {
+    "php": ">=5.4.0"
+  }
+}
