@@ -7,7 +7,7 @@
   ],
   "license": "MIT",
   "homepage": "http://clusterpoint.com",
-  "version": "3.1.1",
+  "version": "3.1.4",
   "require": {
     "php": ">=5.4.0"
   }
